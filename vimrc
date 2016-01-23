@@ -303,6 +303,9 @@ noremap <leader>utm :s#_\(\l\)#\u\1#g
 noremap <leader>wle :s//\r/g
 
 " ====================================== Plugin Settings ===
+
+" hide pyc for NerdTree
+let NERDTreeIgnore=['\.pyc$', '\~$']
 "Additional python syntax highlighting
 let python_highlight_all=1
 
