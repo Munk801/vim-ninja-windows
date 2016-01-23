@@ -25,6 +25,24 @@ filetype on
 " Enable loading indent file for filetype
 filetype plugin indent on
 
+" Enable Vundle
+set rtp+=~/.vimfiles/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" Add all of your plugins here
+Plugin 'kien/ctrlp.vim'
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+
+" All of your plugins must be added before the followig
+call vundle#end()
+filetype plugin indent on
+
+" Set encoding to UTF8
+set encoding=utf-8
+
 " Set the leader key to ,
 let mapleader = ','
 
@@ -51,7 +69,8 @@ if has("win32")
     set keymodel=
 
     if has("gui_running")
-        set guifont=Consolas:h11:cANSI
+        " set guifont=Consolas:h11:cANSI
+		set guifont=Hack:h12:cANSI
     endif
 
 elseif has("unix")
@@ -108,9 +127,8 @@ if has("gui_running")
     " Give me just the code area. No need for toolbars
     set guioptions=ac
     " My colorsceme
-	set background=light
-    colorscheme solarized
-    " let g:molokai_original=0
+	set background=dark
+    colorscheme desert
 else
     " Adapt colors for dark background
     set background=dark
@@ -217,7 +235,7 @@ if has("autocmd")
         autocmd!
         autocmd FileType * setlocal ts=4 sts=4 sw=4 noexpandtab cindent
         " autocmd FileType python,vim,vimrc setlocal ts=4 sts=4 sw=4 expandtab
-        autocmd FileType html,ruby setlocal ts=2 sts=2 sw=2 expandtab
+        autocmd FileType html,ruby setlocal ts=2 sts=2 sw=2 noexpandtab
     augroup END
 
     augroup set_text_width
@@ -227,6 +245,12 @@ if has("autocmd")
         autocmd Filetype python let b:textwidth=79
     augroup END
 endif
+
+" Add yanking of the filepath
+nnoremap <leader>y :let @+=expand("%:p") . ':' . line(".")<CR>
+
+" Disable middle mouse click
+noremap <MiddleMouse> <Nop>
 
 " Setup command to easily call to run python buffer
 command! RunPythonBuffer call DoRunPythonBuffer()
@@ -273,10 +297,22 @@ noremap <leader>sy :if exists("g:syntax_on") <Bar> syntax off <Bar> else <Bar> s
 " NERDTREE
 noremap <leader>n :NERDTreeToggle<CR>
 
+" Maps converting item to underscore to mixedcase
+noremap <leader>utm :s#_\(\l\)#\u\1#g
+
+noremap <leader>wle :s//\r/g
+
 " ====================================== Plugin Settings ===
 "Additional python syntax highlighting
 let python_highlight_all=1
 
 " Gundo Plugin
 nnoremap <F5> :GundoToggle<CR>
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with space
+nnoremap <space> za
 
